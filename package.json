@@ -1,0 +1,54 @@
+{
+  "name": "namelistica",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Dynamic Text Animation Studio - Transform text into stunning animated visual experiences",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:prod": "vite build --config vite.config.production.js",
+    "preview": "vite preview",
+    "preview:prod": "vite preview --config vite.config.production.js",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "analyze": "npx vite-bundle-analyzer"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "framer-motion": "^10.16.4",
+    "three": "^0.158.0",
+    "@react-three/fiber": "^8.15.11",
+    "@react-three/drei": "^9.88.13",
+    "gif.js": "^0.2.0",
+    "canvas-recorder": "^1.1.0",
+    "react-icons": "^4.11.0",
+    "lucide-react": "^0.292.0",
+    "react-color": "^2.19.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.1.0",
+    "vite": "^4.5.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
+  },
+  "keywords": [
+    "react",
+    "animation",
+    "text",
+    "typography",
+    "canvas",
+    "webgl",
+    "export",
+    "gif"
+  ],
+  "author": "Namelistica Team",
+  "license": "MIT"
+}
