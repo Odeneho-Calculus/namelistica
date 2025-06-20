@@ -1,11 +1,10 @@
 /**
- * Test Runner for Export System
+ * Test Runner for PNG Export System
  *
  * This utility provides comprehensive testing tools that can be used
- * in the browser console to diagnose and test the export system.
+ * in the browser console to diagnose and test the PNG export system.
  */
 
-import { runExportSystemTests } from './exportSystemTester.js'
 import { canvasExportSystem } from './canvasExportSystem.js'
 import logger from './logger.js'
 
@@ -58,25 +57,14 @@ const diagnostics = {
     },
 
     /**
-     * Test export capability
+     * Test PNG export capability
      */
-    testExport: async (canvasInput, format = 'png') => {
-        logger.info(`🧪 Testing ${format.toUpperCase()} export...`)
+    testExport: async (canvasInput) => {
+        logger.info('🧪 Testing PNG export...')
 
         try {
-            const exportMethod = {
-                png: canvasExportSystem.exportPNG,
-                jpg: canvasExportSystem.exportJPG,
-                gif: canvasExportSystem.exportGIF,
-                mp4: canvasExportSystem.exportMP4
-            }[format.toLowerCase()]
-
-            if (!exportMethod) {
-                throw new Error(`Unsupported format: ${format}`)
-            }
-
             const startTime = performance.now()
-            const result = await exportMethod(canvasInput, { quality: 0.5 })
+            const result = await canvasExportSystem.exportPNG(canvasInput, { quality: 1.0 })
             const duration = performance.now() - startTime
 
             const testResult = {
@@ -87,7 +75,7 @@ const diagnostics = {
                 blobType: result.blob.type
             }
 
-            logger.info(`✅ Export test successful:`, testResult)
+            logger.info(`✅ PNG export test successful:`, testResult)
             return testResult
 
         } catch (error) {
@@ -96,7 +84,7 @@ const diagnostics = {
                 error: error.message
             }
 
-            logger.error(`❌ Export test failed:`, testResult)
+            logger.error(`❌ PNG export test failed:`, testResult)
             return testResult
         }
     },
@@ -105,7 +93,7 @@ const diagnostics = {
      * Get system statistics
      */
     getStats: () => {
-        const stats = canvasExportSystem.getStatistics()
+        const stats = canvasExportSystem.getExportStats()
         logger.info('📊 Export System Statistics:', stats)
         return stats
     },
@@ -144,19 +132,65 @@ const diagnostics = {
     },
 
     /**
-     * Quick export test with generated canvas
+     * Quick PNG export test with generated canvas
      */
-    quickTest: async (format = 'png') => {
-        logger.info(`🚀 Running quick ${format.toUpperCase()} export test...`)
+    quickTest: async () => {
+        logger.info('🚀 Running quick PNG export test...')
 
         const testCanvas = diagnostics.createTestCanvas()
-        const result = await diagnostics.testExport(testCanvas, format)
+        const result = await diagnostics.testExport(testCanvas)
 
         // Cleanup
         testCanvas.width = 1
         testCanvas.height = 1
 
         return result
+    },
+
+    /**
+     * Run comprehensive PNG export tests
+     */
+    runFullTests: async () => {
+        logger.info('🧪 Running comprehensive PNG export system tests...')
+
+        const results = {
+            canvasCreation: null,
+            canvasAnalysis: null,
+            pngExport: null,
+            systemStats: null
+        }
+
+        try {
+            // Test 1: Canvas creation
+            logger.info('Test 1: Canvas creation')
+            const testCanvas = diagnostics.createTestCanvas()
+            results.canvasCreation = { success: true, dimensions: `${testCanvas.width}x${testCanvas.height}` }
+
+            // Test 2: Canvas analysis
+            logger.info('Test 2: Canvas analysis')
+            results.canvasAnalysis = diagnostics.analyzeCanvas(testCanvas)
+
+            // Test 3: PNG export
+            logger.info('Test 3: PNG export')
+            results.pngExport = await diagnostics.testExport(testCanvas)
+
+            // Test 4: System statistics
+            logger.info('Test 4: System statistics')
+            results.systemStats = diagnostics.getStats()
+
+            // Cleanup
+            testCanvas.width = 1
+            testCanvas.height = 1
+
+            logger.info('✅ All tests completed successfully!')
+            logger.info('📋 Test Results Summary:', results)
+
+        } catch (error) {
+            logger.error('❌ Test suite failed:', error)
+            results.error = error.message
+        }
+
+        return results
     }
 }
 
@@ -165,7 +199,7 @@ if (typeof window !== 'undefined') {
     window.namelistica = window.namelistica || {}
     window.namelistica.debug = {
         // Main test runner
-        runFullTests: runExportSystemTests,
+        runFullTests: diagnostics.runFullTests,
 
         // Diagnostic tools
         analyzeCanvas: diagnostics.analyzeCanvas,
@@ -184,17 +218,17 @@ if (typeof window !== 'undefined') {
         help: () => {
             logger.info('🔧 Namelistica Debug Tools Help:')
             logger.info('================================')
-            logger.info('🧪 runFullTests() - Run comprehensive export system tests')
+            logger.info('🧪 runFullTests() - Run comprehensive PNG export system tests')
             logger.info('🔍 analyzeCanvas(canvas) - Analyze canvas reference structure')
-            logger.info('📤 testExport(canvas, format) - Test export for specific format')
+            logger.info('📤 testExport(canvas) - Test PNG export')
             logger.info('📊 getStats() - Get export system statistics')
             logger.info('🎨 createTestCanvas() - Create a test canvas')
-            logger.info('⚡ quickTest(format) - Quick test with generated canvas')
+            logger.info('⚡ quickTest() - Quick PNG test with generated canvas')
             logger.info('💡 help() - Show this help message')
             logger.info('')
             logger.info('Example usage:')
             logger.info('  window.namelistica.debug.runFullTests()')
-            logger.info('  window.namelistica.debug.quickTest("png")')
+            logger.info('  window.namelistica.debug.quickTest()')
             logger.info('  window.namelistica.debug.analyzeCanvas(yourCanvas)')
         }
     }
@@ -203,4 +237,4 @@ if (typeof window !== 'undefined') {
     logger.info('💡 Type window.namelistica.debug.help() for usage instructions')
 }
 
-export { runExportSystemTests, diagnostics }
+export { diagnostics }

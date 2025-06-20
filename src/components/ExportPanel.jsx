@@ -8,44 +8,29 @@ const ExportPanel = ({
   isExporting,
   exportProgress
 }) => {
-  const [selectedFormat, setSelectedFormat] = useState('png')
   const [resolution, setResolution] = useState('1080p')
 
-  const formats = [
-    {
-      id: 'png',
-      name: 'PNG Image',
-      icon: FileImage,
-      description: 'High quality static image',
-      sizes: ['720p', '1080p', '4K'],
-      action: onExportPNG
-    }
-  ]
-
   const resolutions = {
-    '480p': { width: 854, height: 480 },
     '720p': { width: 1280, height: 720 },
     '1080p': { width: 1920, height: 1080 },
     '4K': { width: 3840, height: 2160 }
   }
 
-  const handleExport = () => {
-    const selectedFormatData = formats.find(f => f.id === selectedFormat)
-    const res = resolutions[resolution]
+  const availableResolutions = ['720p', '1080p', '4K']
 
-    if (selectedFormatData) {
-      selectedFormatData.action({
-        resolution: res,
-        format: selectedFormat
-      })
-    }
+  const handleExport = () => {
+    const res = resolutions[resolution]
+    onExportPNG({
+      resolution: res,
+      format: 'png'
+    })
   }
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-white">Export Animation</h3>
+        <h3 className="text-xl font-bold text-white">Export PNG Image</h3>
         <button
           onClick={onClose}
           className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
@@ -54,47 +39,22 @@ const ExportPanel = ({
         </button>
       </div>
 
-      {/* Format Selection */}
-      <div className="space-y-3">
-        <label className="block text-sm font-medium text-gray-300">Export Format</label>
-        <div className="grid grid-cols-1 gap-3">
-          {formats.map((format) => {
-            const Icon = format.icon
-            return (
-              <motion.button
-                key={format.id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedFormat(format.id)}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
-                  selectedFormat === format.id
-                    ? 'border-purple-500 bg-purple-500/10'
-                    : 'border-slate-600 bg-slate-700/30 hover:border-slate-500'
-                }`}
-              >
-                <div className="flex items-start space-x-3">
-                  <Icon className="w-6 h-6 text-purple-400 mt-1" />
-                  <div className="flex-1">
-                    <div className="font-medium text-white">{format.name}</div>
-                    <div className="text-sm text-gray-400">{format.description}</div>
-                  </div>
-                  {selectedFormat === format.id && (
-                    <div className="w-4 h-4 bg-purple-500 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full" />
-                    </div>
-                  )}
-                </div>
-              </motion.button>
-            )
-          })}
+      {/* Format Info */}
+      <div className="bg-slate-700/30 rounded-lg p-4 border border-slate-600">
+        <div className="flex items-start space-x-3">
+          <FileImage className="w-6 h-6 text-purple-400 mt-1" />
+          <div className="flex-1">
+            <div className="font-medium text-white">PNG Image</div>
+            <div className="text-sm text-gray-400">High quality lossless static image</div>
+          </div>
         </div>
       </div>
 
       {/* Resolution Selection */}
       <div className="space-y-3">
         <label className="block text-sm font-medium text-gray-300">Resolution</label>
-        <div className="grid grid-cols-2 gap-2">
-          {formats.find(f => f.id === selectedFormat)?.sizes.map((size) => (
+        <div className="grid grid-cols-3 gap-2">
+          {availableResolutions.map((size) => (
             <button
               key={size}
               onClick={() => setResolution(size)}
@@ -112,8 +72,6 @@ const ExportPanel = ({
           ))}
         </div>
       </div>
-
-
 
       {/* Export Progress */}
       {isExporting && (
@@ -154,7 +112,7 @@ const ExportPanel = ({
         ) : (
           <>
             <Download className="w-5 h-5" />
-            <span>Export {formats.find(f => f.id === selectedFormat)?.name}</span>
+            <span>Export PNG Image</span>
           </>
         )}
       </motion.button>
