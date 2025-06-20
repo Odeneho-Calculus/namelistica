@@ -28,10 +28,7 @@ function App() {
   } = useAnimationEngine()
 
   const {
-    exportGIF,
     exportPNG,
-    exportJPG,
-    exportMP4,
     isExporting,
     exportProgress
   } = useExport(canvasRef)
@@ -163,10 +160,7 @@ function App() {
             >
               <ExportPanel
                 onClose={() => setShowExportPanel(false)}
-                onExportGIF={exportGIF}
                 onExportPNG={exportPNG}
-                onExportJPG={exportJPG}
-                onExportMP4={exportMP4}
                 isExporting={isExporting}
                 exportProgress={exportProgress}
               />

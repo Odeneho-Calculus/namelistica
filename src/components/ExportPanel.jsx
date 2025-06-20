@@ -1,29 +1,17 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { X, Download, Image, Film, FileImage, Loader } from 'lucide-react'
+import { X, Download, FileImage, Loader } from 'lucide-react'
 
 const ExportPanel = ({
   onClose,
-  onExportGIF,
   onExportPNG,
-  onExportJPG,
-  onExportMP4,
   isExporting,
   exportProgress
 }) => {
-  const [selectedFormat, setSelectedFormat] = useState('gif')
-  const [quality, setQuality] = useState(80)
+  const [selectedFormat, setSelectedFormat] = useState('png')
   const [resolution, setResolution] = useState('1080p')
 
   const formats = [
-    {
-      id: 'gif',
-      name: 'Animated GIF',
-      icon: Image,
-      description: 'Perfect for social media and web',
-      sizes: ['480p', '720p', '1080p'],
-      action: onExportGIF
-    },
     {
       id: 'png',
       name: 'PNG Image',
@@ -31,22 +19,6 @@ const ExportPanel = ({
       description: 'High quality static image',
       sizes: ['720p', '1080p', '4K'],
       action: onExportPNG
-    },
-    {
-      id: 'jpg',
-      name: 'JPG Image',
-      icon: FileImage,
-      description: 'Compressed static image',
-      sizes: ['720p', '1080p', '4K'],
-      action: onExportJPG
-    },
-    {
-      id: 'mp4',
-      name: 'MP4 Video',
-      icon: Film,
-      description: 'High quality video format',
-      sizes: ['720p', '1080p', '4K'],
-      action: onExportMP4
     }
   ]
 
@@ -63,7 +35,6 @@ const ExportPanel = ({
 
     if (selectedFormatData) {
       selectedFormatData.action({
-        quality,
         resolution: res,
         format: selectedFormat
       })
@@ -142,27 +113,7 @@ const ExportPanel = ({
         </div>
       </div>
 
-      {/* Quality Slider */}
-      {(selectedFormat === 'gif' || selectedFormat === 'jpg' || selectedFormat === 'mp4') && (
-        <div className="space-y-3">
-          <label className="block text-sm font-medium text-gray-300">
-            Quality: {quality}%
-          </label>
-          <input
-            type="range"
-            min="10"
-            max="100"
-            step="5"
-            value={quality}
-            onChange={(e) => setQuality(parseInt(e.target.value))}
-            className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
-          />
-          <div className="flex justify-between text-xs text-gray-500">
-            <span>Smaller file</span>
-            <span>Better quality</span>
-          </div>
-        </div>
-      )}
+
 
       {/* Export Progress */}
       {isExporting && (
@@ -212,10 +163,7 @@ const ExportPanel = ({
       <div className="bg-slate-800/30 rounded-lg p-3 text-xs text-gray-400">
         <p className="font-medium mb-1">📁 Estimated file size:</p>
         <p>
-          {selectedFormat === 'gif' && `~${Math.round(quality * 0.1)}MB (depends on animation length)`}
-          {selectedFormat === 'png' && `~${Math.round(resolutions[resolution].width * resolutions[resolution].height * 0.000003)}MB`}
-          {selectedFormat === 'jpg' && `~${Math.round(resolutions[resolution].width * resolutions[resolution].height * quality * 0.000001)}MB`}
-          {selectedFormat === 'mp4' && `~${Math.round(quality * 0.05)}MB per second`}
+          ~{Math.round(resolutions[resolution].width * resolutions[resolution].height * 0.000003)}MB
         </p>
       </div>
     </div>

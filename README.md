@@ -26,11 +26,10 @@ Transform your text into stunning animated visual experiences with AI-powered de
 - **Adaptive Canvas**: Scales perfectly to any screen size
 - **60fps Performance**: Smooth animations on all devices
 
-### 💾 **Multi-Format Export**
-- **Animated GIF**: Optimized for social media sharing
-- **High-Quality Images**: PNG/JPG snapshots at peak moments
-- **Video Export**: MP4 with customizable quality settings
+### 💾 **High-Quality Export**
+- **PNG Images**: High-quality static snapshots at peak moments
 - **Multiple Resolutions**: 720p, 1080p, and 4K options
+- **Perfect Quality**: Lossless compression for crisp, clear images
 
 ## 🚀 Getting Started
 
@@ -74,9 +73,9 @@ Transform your text into stunning animated visual experiences with AI-powered de
 - **Effects Tab**: Layer particles, glow, shadows, and gradients
 
 ### Export Options
-- **Format Selection**: GIF, PNG, JPG, or MP4
-- **Quality Control**: Balance file size vs visual quality
-- **Resolution Presets**: Social media optimized or print-ready
+- **PNG Format**: High-quality lossless image export
+- **Resolution Presets**: 720p, 1080p, and 4K options
+- **Perfect Quality**: Crystal clear images for any use case
 
 ## 🛠️ Technology Stack
 
